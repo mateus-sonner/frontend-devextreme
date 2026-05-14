@@ -1,0 +1,102 @@
+<app-container>
+
+  <app-cabecalho></app-cabecalho>
+
+  <div class="botao-adicionar">
+
+    <dx-button
+      text="Novo Contato"
+      icon="plus"
+      type="default"
+      stylingMode="contained"
+      (onClick)="abrirPopup()">
+    </dx-button>
+
+    <dx-popup
+      [(visible)]="popupVisivel"
+      [width]="400"
+      [height]="350"
+      title="Novo Contato"
+      [showCloseButton]="true"
+      [dragEnabled]="false"
+      [hideOnOutsideClick]="true">
+
+      <div *dxTemplate="let data of 'content'">
+
+        <dx-validation-group>
+
+          <div class="formulario">
+
+            <dx-text-box
+              placeholder="Nome"
+              [(value)]="novoContato.nome">
+              <dx-validator>
+                <dxi-validation-rule
+                  type="required"
+                  message="Nome é obrigatório">
+                </dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+
+            <dx-text-box
+              placeholder="Telefone"
+              [(value)]="novoContato.telefone"
+              mask="(00) 00000-0000">
+              <dx-validator>
+                <dxi-validation-rule
+                  type="required"
+                  message="Telefone é obrigatório">
+                </dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+
+            <dx-button
+              text="Salvar"
+              type="success"
+              (onClick)="salvarContato($event)">
+            </dx-button>
+
+          </div>
+
+        </dx-validation-group>
+
+      </div>
+
+    </dx-popup>
+
+  </div>
+
+  <dx-list class="list"
+           [dataSource]="contatos"
+           displayExpr="nome"
+           [searchEnabled]="true"
+           searchExpr="nome"
+           [grouped]="true"
+           groupTemplate="group"
+           searchMode="contains"
+           [searchEditorOptions]="{
+           placeholder: 'Buscar contatos...'}">
+
+    <div *dxTemplate="let grupo of 'group'">
+      <div class="grupo">
+        {{ grupo.key }}
+      </div>
+
+    </div>
+    <div *dxTemplate="let contato of 'item'">
+      <div class="contato-item">
+        <strong>{{ contato.nome }}</strong>
+        <span>{{ contato.telefone }}</span>
+        <div class="botoes">
+          <dx-button stylingMode="text">
+            <img src="pencil-square.png">
+          </dx-button>
+          <dx-button stylingMode="text">
+            <img src="trash.png">
+          </dx-button>
+        </div>
+      </div>
+    </div>
+  </dx-list>
+
+</app-container>

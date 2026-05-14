@@ -1,0 +1,23 @@
+.cabecalho {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  border-bottom: 1px solid #0d6efd;
+  padding-bottom: 20px;
+}
+
+.logo {
+  margin-left: 110px;
+}
+
+.banner {
+  margin-left: 30px;
+}
+
+.subtitulo{
+  border-bottom: 1px solid #0d6efd;
+  margin-left: 30px;
+  padding-bottom: 30px;
+}
