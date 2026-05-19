@@ -4,6 +4,7 @@
 
   <div class="botao-adicionar">
 
+    <!--Botao para adicionar novo contato onde ao clicar abre uma popup para informar dados-->
     <dx-button
       text="Novo Contato"
       icon="plus"
@@ -12,6 +13,7 @@
       (onClick)="abrirPopup()">
     </dx-button>
 
+    <!--Declaracao das propriedades da popup para adicionar novo contato-->
     <dx-popup
       [(visible)]="popupVisivel"
       [width]="400"
@@ -21,12 +23,15 @@
       [dragEnabled]="false"
       [hideOnOutsideClick]="true">
 
+      <!--Criacao do popup personalizado para cadastro de novo contato-->
       <div *dxTemplate="let data of 'content'">
 
+        <!--permite a validacao de todos os campos da popup para cadastro de novo contato-->
         <dx-validation-group>
 
           <div class="formulario">
 
+            <!--Cria um campo de texto ligado a variavel novoContato.nome com validação obrigatoria-->
             <dx-text-box
               placeholder="Nome"
               [(value)]="novoContato.nome">
@@ -38,6 +43,7 @@
               </dx-validator>
             </dx-text-box>
 
+            <!--Cria um campo de texto ligado a variavel novoContato.telefone com mascara e validação obrigatoria-->
             <dx-text-box
               placeholder="Telefone"
               [(value)]="novoContato.telefone"
@@ -50,6 +56,7 @@
               </dx-validator>
             </dx-text-box>
 
+            <!--cria um botao que salva os dados no momento do clique-->
             <dx-button
               text="Salvar"
               type="success"
@@ -66,6 +73,7 @@
 
   </div>
 
+  <!--cria uma lista de contatos com busca automatica e agrupamento-->
   <dx-list class="list"
            [dataSource]="contatos"
            displayExpr="nome"
@@ -77,12 +85,14 @@
            [searchEditorOptions]="{
            placeholder: 'Buscar contatos...'}">
 
+    <!--cria o agrupamento por letra inicial do contato-->
     <div *dxTemplate="let grupo of 'group'">
       <div class="grupo">
         {{ grupo.key }}
       </div>
-
     </div>
+
+    <!--cria os contatos de acordo com a letra inicial-->
     <div *dxTemplate="let contato of 'item'">
       <div class="contato-item">
         <strong>{{ contato.nome }}</strong>
@@ -90,6 +100,7 @@
         <div class="botoes">
           <dx-button stylingMode="text">
             <img src="pencil-square.png">
+
           </dx-button>
           <dx-button stylingMode="text">
             <img src="trash.png">
