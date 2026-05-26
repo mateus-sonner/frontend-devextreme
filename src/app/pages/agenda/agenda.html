@@ -1,7 +1,8 @@
+<!--container principal da pagina-->
 <app-container>
-
+  <!--container do cabecalho-->
   <app-cabecalho></app-cabecalho>
-
+  <!-- classe criada para estilizacao do botao de adicionar contato-->
   <div class="botao-adicionar">
 
     <!--Botao para adicionar novo contato onde ao clicar abre uma popup para informar dados-->
@@ -18,57 +19,58 @@
       [(visible)]="popupVisivel"
       [width]="400"
       [height]="350"
-      title="Novo Contato"
+      title="{{ modoEdicao ? 'Editar Contato' : 'Novo Contato' }}"
       [showCloseButton]="true"
       [dragEnabled]="false"
       [hideOnOutsideClick]="true">
 
-      <!--Criacao do popup personalizado para cadastro de novo contato-->
+      <!--Template personalizado para receber dados de novo contato-->
       <div *dxTemplate="let data of 'content'">
-
-        <!--permite a validacao de todos os campos da popup para cadastro de novo contato-->
-        <dx-validation-group>
-
-          <div class="formulario">
-
-            <!--Cria um campo de texto ligado a variavel novoContato.nome com validação obrigatoria-->
-            <dx-text-box
-              placeholder="Nome"
-              [(value)]="novoContato.nome">
-              <dx-validator>
-                <dxi-validation-rule
-                  type="required"
-                  message="Nome é obrigatório">
-                </dxi-validation-rule>
-              </dx-validator>
-            </dx-text-box>
-
-            <!--Cria um campo de texto ligado a variavel novoContato.telefone com mascara e validação obrigatoria-->
-            <dx-text-box
-              placeholder="Telefone"
-              [(value)]="novoContato.telefone"
-              mask="(00) 00000-0000">
-              <dx-validator>
-                <dxi-validation-rule
-                  type="required"
-                  message="Telefone é obrigatório">
-                </dxi-validation-rule>
-              </dx-validator>
-            </dx-text-box>
-
-            <!--cria um botao que salva os dados no momento do clique-->
-            <dx-button
-              text="Salvar"
-              type="success"
-              (onClick)="salvarContato($event)">
-            </dx-button>
-
-          </div>
-
+        <!--agrupa a validacao de todos os campos internos-->
+        <dx-validation-group
+          validationGroup="grupoContato">
+          <!--cria o formulario novo contato e liga o mesmo ao objeto-->
+          <dx-form
+            [formData]="novoContato"
+            [colCount]="1">
+            <!--cria o campo nome no formulario ligando a propriedade nome do objeto novoContato-->
+            <dxi-item
+              dataField="nome"
+              editorType="dxTextBox"
+              [isRequired]="true"
+              [editorOptions]="{
+              validationMessageMode: 'always'}">
+              <!--faz a validacao do campo nome como obrigatório-->
+              <dxi-validation-rule
+                type="required"
+                message="Nome é obrigatório">
+              </dxi-validation-rule>
+            </dxi-item>
+            <!--cria o campo telefone no formulario já com mascara ligando a propriedade telefone do objeto novoContato-->
+            <dxi-item
+              dataField="telefone"
+              editorType="dxTextBox"
+              [isRequired]="true"
+              [editorOptions]="{
+                mask: '(00) 00000-0000',
+                useMaskedValue: true
+              }">
+              <!--faz a validacao do campo telefone como obrigatório-->
+              <dxi-validation-rule
+                type="required"
+                message="Telefone é obrigatório">
+              </dxi-validation-rule>
+            </dxi-item>
+          </dx-form>
+          <!--cria o botao de salvar contato dentro da popup chamando salvarcontato ao clicar-->
+          <dx-button
+            text="Salvar"
+            type="success"
+            validationGroup="grupoContato"
+            (onClick)="salvarContato()">
+          </dx-button>
         </dx-validation-group>
-
       </div>
-
     </dx-popup>
 
   </div>
@@ -82,6 +84,7 @@
            [grouped]="true"
            groupTemplate="group"
            searchMode="contains"
+           noDataText="Nenhum contato encontrado"
            [searchEditorOptions]="{
            placeholder: 'Buscar contatos...'}">
 
@@ -92,17 +95,20 @@
       </div>
     </div>
 
-    <!--cria os contatos de acordo com a letra inicial-->
+    <!--cria os contatos de acordo com a letra inicial podendo editar e excluir os mesmos-->
     <div *dxTemplate="let contato of 'item'">
       <div class="contato-item">
         <strong>{{ contato.nome }}</strong>
         <span>{{ contato.telefone }}</span>
         <div class="botoes">
-          <dx-button stylingMode="text">
+          <dx-button
+            stylingMode="text"
+            (onClick)="editarContato(contato)">
             <img src="pencil-square.png">
-
           </dx-button>
-          <dx-button stylingMode="text">
+          <dx-button
+            stylingMode="text"
+            (onClick)="excluirContato(contato)">
             <img src="trash.png">
           </dx-button>
         </div>

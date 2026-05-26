@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AgendaService {
-
   /*injeta o http para que seja possivel fazer requisicoes*/
   constructor(private http: HttpClient) {}
 
@@ -44,14 +43,16 @@ export class AgendaService {
     }));
   }
 
-  /*metodo chamado ao clicar no botao de salvar contato da popup*/
-  salvarContato(e: any, novoContato: any) {
-    /*executa validacao dos campos*/
-    const resultado = e.validationGroup.validate();
-    /*se nao passou na validacao nao salva dados*/
-    if (!resultado.isValid) {
-      return null;
-    }
-      return this.http.post('http://localhost:3000/contatos', novoContato);
+  /*salva um contato no backend atraves de uma requisicao http*/
+  salvarContato(contato: any) {
+    return this.http.post('http://localhost:3000/contatos', contato);
+  }
+  /*atualiza um contato no backend atraves de uma requisicao http*/
+  atualizarContato(contato: any) {
+    return this.http.put(`http://localhost:3000/contatos/${contato.id}`, contato);
+  }
+  /*exclui um contato no backend atraves de uma requisicao http*/
+  excluirContato(contato: any) {
+    return this.http.delete(`http://localhost:3000/contatos/${contato.id}`);
   }
 }

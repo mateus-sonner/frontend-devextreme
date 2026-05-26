@@ -1,9 +1,4 @@
 {
-  "contatos": [
-    {
-      "nome": "Mateus",
-      "telefone": "31 988775394",
-      "id": "1"
-    }
-  ]
+  "contatos": [],
+  "$schema": "./node_modules/json-server/schema.json"
 }
