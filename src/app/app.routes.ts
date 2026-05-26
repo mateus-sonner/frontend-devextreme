@@ -10,6 +10,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { Agenda } from './pages/agenda/agenda';
+import { Localidade } from './pages/localidade/localidade';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,11 @@ export const routes: Routes = [
   {
     path: 'agenda',
     component: Agenda,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'localidades',
+    component: Localidade,
     canActivate: [AuthGuardService],
   },
   {

@@ -21,6 +21,10 @@ export const navigation: NavigationItem[] = [
         text: 'Agenda',
         path: '/agenda',
       },
+      {
+        text: 'Localidades',
+        path: '/localidades',
+      },
     ],
   },
 ];
