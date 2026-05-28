@@ -1,12 +1,23 @@
 <!--select box com opcao de pesquisa contendo os estados-->
+<!--guarda o estado selecionado na variavel [estadoSelecionado]-->
+<!--[onValueChanged] executa o metodo [selecionarEstado] sempre que um estado for selecionado onde [$event] contem as informacoes da mudanca-->
 <div class="seletor-estado">
   <dx-select-box
     [items]="estados"
     displayExpr="nome"
-    valueExpr="id"
+    valueExpr="nome"
+    [(value)]="estadoSelecionado"
+    (onValueChanged)="selecionarEstado($event)"
     placeholder="Selecione um estado"
     [searchEnabled]="true">
   </dx-select-box>
+</div>
+
+<div class="estado-selecionado">
+  <dx-text-box
+    [value]="estadoSelecionado"
+    [readOnly]="true">
+  </dx-text-box>
 </div>
 
 

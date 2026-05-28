@@ -1,9 +1,10 @@
 <div class="seletor-municipio">
   <dx-select-box
     displayExpr="nome"
-    valueExpr="id"
+    valueExpr="nome"
     placeholder="Selecione um município"
     [searchEnabled]="true"
-    searchMode="contains">
+    searchMode="contains"
+    [disabled]="!estadoSelecionado">
   </dx-select-box>
 </div>

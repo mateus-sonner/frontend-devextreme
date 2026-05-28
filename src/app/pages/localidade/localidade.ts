@@ -9,4 +9,9 @@ import { SeletorMunicipio } from '../../shared/components/seletor-municipio/sele
   templateUrl: './localidade.html',
   styleUrl: './localidade.scss',
 })
-export class Localidade {}
+export class Localidade {
+
+  /*variavel responsavel por armazenar os dados do estado selecionado*/
+  estadoSelecionado: string = null;
+
+}

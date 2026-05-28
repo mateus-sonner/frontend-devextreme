@@ -3,7 +3,13 @@
   <!--titulo da aplicacao-->
   <h1 class="titulo">Localidades</h1>
   <!--seletor de estado-->
-  <app-seletor-estado></app-seletor-estado>
+  <!--controla a selecao do estado atraves da variavel (estadoSelecionado)-->
+  <app-seletor-estado
+    (estadoChange)="estadoSelecionado = $event">
+  </app-seletor-estado>
   <!--seletor de municipio-->
-  <app-seletor-municipio></app-seletor-municipio>
+  <!--controla a selecao do estado atraves da variavel (estadoSelecionado) para so entao habilitar os municipios-->
+  <app-seletor-municipio
+    [estadoSelecionado]="estadoSelecionado">
+  </app-seletor-municipio>
 </app-container>

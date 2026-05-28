@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DxSelectBoxComponent } from 'devextreme-angular';
 
 @Component({
@@ -7,4 +7,7 @@ import { DxSelectBoxComponent } from 'devextreme-angular';
   templateUrl: './seletor-municipio.html',
   styleUrl: './seletor-municipio.scss',
 })
-export class SeletorMunicipio {}
+export class SeletorMunicipio {
+
+  @Input() estadoSelecionado: string = null;
+}

@@ -6,3 +6,19 @@
   width: 300px;
   margin: 20px;
 }
+
+.estado-selecionado {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+
+  width: 290px;
+  margin: 20px;
+}
+
+.estado-selecionado ::ng-deep .dx-texteditor {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+

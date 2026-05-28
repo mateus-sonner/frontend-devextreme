@@ -1,40 +1,45 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
-import { DxSelectBoxModule } from 'devextreme-angular';
-import { HttpClient } from '@angular/common/http';
+import { DxSelectBoxModule, DxTextBoxComponent } from 'devextreme-angular';
+import { LocalidadeService } from '../../services/localidade.service';
 
 @Component({
   selector: 'app-seletor-estado',
-  imports: [DxSelectBoxModule],
+  imports: [DxSelectBoxModule, DxTextBoxComponent],
   templateUrl: './seletor-estado.html',
   styleUrl: './seletor-estado.scss',
 })
 
 /*Oninit permite executar assim q a aplicacao for iniciada*/
 export class SeletorEstado implements OnInit {
-  /*protocolo para requisicoes do tipo http*/
-  private http = inject(HttpClient);
+  /*injeta o localidadeService no componente*/
+  constructor(private localidadeService: LocalidadeService) {}
 
   /*array responsavel por armazenar os estados*/
   estados: any[] = [];
 
-  @Output() estadoSelecionadoChange = new EventEmitter<number>();
+  estadoSelecionado: string = null;
 
-  /*variavel para guardar qual estado foi selecionado*/
-  estadoSelecionado: number | null = null;
+  @Output() estadoChange = new EventEmitter<string>();
 
   /*chama o metodo buscarEstados assim que a aplicacao for iniciada*/
   ngOnInit(): void {
     this.buscarEstados();
   }
 
-  /*metodo responsavel por buscar os estados atraves da API do IBGE*/
+  /*metodo responsavel por chamar a busca dos estados*/
   buscarEstados(): void {
-    /*faz uma requisicao http para obter os estados*/
-    this.http.get<any[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados').subscribe({
-      /*quando a resposta chega ordena os estados pelo nome comparando atraves do localeCompare*/
+    /*chama o service para a busca dos estados onde o subscribe e responsavel por receber a resposta da requisicao http*/
+    this.localidadeService.buscarEstados().subscribe({
+      /*quando a requisicao e retornada (next) a variavel (dados) contem a lista de estados*/
       next: (dados) => {
+        /*ordena os estados alfabeticamente pelo nome atraves do (sort) onde os estados sao comparados atraves do (localeCompare)*/
         this.estados = dados.sort((a, b) => a.nome.localeCompare(b.nome));
       },
     });
+  }
+
+  /*ao selecionar o estado envia os dados do mesmo para o componentes pai indicando a selecao do estado*/
+  selecionarEstado(e: any): void {
+    this.estadoChange.emit(e.value);
   }
 }
